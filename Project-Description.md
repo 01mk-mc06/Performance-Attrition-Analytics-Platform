@@ -1,21 +1,21 @@
 # Project Description
-## Business Goal — Analyze agent metrics to predict attrition, optimize training, and improve performance scoring for client reporting.
+### Business Goal — Analyze agent metrics to predict attrition, optimize training, and improve performance scoring for client reporting.
 Key Features & Flow
 
-## Raw Data — Agent performance logs, call outcomes, handle time, quality scores, HR data (tenure, shifts), surveys.
+#### Raw Data — Agent performance logs, call outcomes, handle time, quality scores, HR data (tenure, shifts), surveys.
 
-### Ingestion — Batch: ADF incremental loads (watermark pattern) from multiple sources.
+#### Ingestion — Batch: ADF incremental loads (watermark pattern) from multiple sources.
 
-### Processing — Databricks for medallion transformations, feature engineering (e.g., calls per shift, resolution rate), simple ML (logistic regression or Spark MLlib) for attrition risk.
+#### Processing — Databricks for medallion transformations, feature engineering (e.g., calls per shift, resolution rate), simple ML (logistic regression or Spark MLlib) for attrition risk.
 
-### Storage — Delta Lake Gold layer for agent 360 views.
+#### Storage — Delta Lake Gold layer for agent 360 views.
 
-### Serving — Synapse Dedicated SQL Pool for fast reporting; Power BI for scorecards.
+#### Serving — Synapse Dedicated SQL Pool for fast reporting; Power BI for scorecards.
 
-### Governance — Purview scanning + catalog, RBAC via Entra ID groups.
+#### Governance — Purview scanning + catalog, RBAC via Entra ID groups.
 
-### Cost Control — Spot instances for ML training, query optimization, reserved capacity.
+#### Cost Control — Spot instances for ML training, query optimization, reserved capacity.
 
-### CI/CD — Git-integrated DevOps pipelines, notebook versioning, MLflow for model tracking.
+#### CI/CD — Git-integrated DevOps pipelines, notebook versioning, MLflow for model tracking.
 
-### Dashboard Highlights — Agent scorecard, attrition probability trends, top drivers (e.g., high AHT shifts), training ROI.
+#### Dashboard Highlights — Agent scorecard, attrition probability trends, top drivers (e.g., high AHT shifts), training ROI.
