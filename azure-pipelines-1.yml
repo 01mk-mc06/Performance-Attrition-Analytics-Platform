@@ -1,0 +1,37 @@
+# Simple CI/CD for BPO Attrition Project
+trigger:
+  - main  # Run on pushes to main branch
+
+pool:
+  vmImage: 'ubuntu-latest'  # Free agent
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'  # For any Python checks
+
+- script: echo "Running tests and deploying notebooks..."
+  displayName: 'Run basic checks'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: '409baa1b-096b-4525-9cc5-2c9f800d2201'  # ← Create a service connection first (see below)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      # Deploy Databricks notebooks via CLI
+      databricks configure --token  # Assume token set as variable
+      databricks workspace import_dir notebooks /Workspace/Shared/BPOProject
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Your-Azure-Connection'
+    subscriptionId: 'your-sub-id'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'bpo-attrition-rg'
+    location: 'Southeast Asia'
+    templateLocation: 'Linked artifact'
+    csmFile: 'iac/bicep/main.bicep'  # Assume you have a Bicep file for IaC
+    deploymentMode: 'Incremental'
+  displayName: 'Deploy IaC (optional stretch)'
